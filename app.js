@@ -1,7 +1,8 @@
+
+
 function* iterator(startValue) {
   while (true) {
     yield startValue += 1;
-    console.log('boom')
   }
 }
 
@@ -15,3 +16,5 @@ console.log(iterateFrom5.next()); // returns an object { value: 2, done: false }
 console.log(iterateFrom5.next().value); // returns 3
 console.log(iterateFrom5.next().value); // returns 4
 console.log(iterateFrom5.next().value); // returns 5
+
+console.log(iterateFrom5.next(100).value); // returns 101

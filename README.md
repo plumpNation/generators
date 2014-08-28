@@ -1,9 +1,13 @@
 # Exploring generators
 
+## Words to explore
+Coroutines,
+
 ## What do they do?
 
-It seems as though one creates a generator, and then assign that to a variable,
-much the same as creating a higher order function for use in functional
+It seems as though one creates a generator, and then assign
+the function that it returns to a variable, much the same as
+creating a higher order function for use in functional
 programming.
 
 ```js
@@ -19,16 +23,20 @@ var add2To = generateAdder(2);
 console.log(add2To(5)); // prints 7
 ```
 
-We *generated* a function that adds 2 to it's param. The closure keeps the value
-of n, and we can reuse the add2To over and over again.
+We *generated* a function that adds 2 to it's param.
+The closure keeps the value of n, and we can reuse the add2To
+over and over again.
 
-So then a generator seems to be returning a function for us to reuse, and adding
-some API functions to this function.
+So then a generator seems to be returning a function for us to
+reuse, and adding some API functions to this function. This may
+not be the actual case, however I'll delete all this if I'm
+wrong.
 
 ## Create our first generator
 
-The star '*' tells JS that this is going to be a generator. This example is not
-the same as the last, it is not trying to replicate the same functionality.
+The star '*' tells JS that this is going to be a generator.
+This example is not the same as the last, it is not trying to
+replicate the same functionality.
 
 ```js
 function* iterator(startValue) {
@@ -62,12 +70,34 @@ things to try to understand in order to grasp the fundamentals of generators.
 ### next()
 
 ```js
-console.log(iterateFrom5.next()); // returns an object { value: 2, done: false }
-console.log(iterateFrom5.next().value); // returns 3
-console.log(iterateFrom5.next().value); // returns 4
-console.log(iterateFrom5.next().value); // returns 5
+console.log(iterateFrom5.next()); // { value: 2, done: false }
+console.log(iterateFrom5.next().value); // 3
+console.log(iterateFrom5.next().value); // 4
+console.log(iterateFrom5.next().value); // 5
+```
+
+### send()
+
+~~It seems like this will reinitialise the generator with a new parameter value,
+or it simply changes the value without initialising anything, if that makes any
+sense~~.
+
+Send, it seems at least on node 0.11.13 does not exist. Rather, I found in a
+great article about [Ecmascript 6 native promises](http://www.html5rocks.com/en/tutorials/es6/promises/)
+no mention of them at all, and the use of next() with an input instead.
+
+If we append this code to the code above so we don't have to write it all out
+again, you can see what the next() function does.
+
+```js
+console.log(iterateFrom5.next().value); // 6
+// console.log(iterateFrom5.send(100).value); // 'undefined' is not a function
+
 ```
 
 # Reading materials
-- [http://jlongster.com/2012/10/05/javascript-yield.html](http://jlongster.com/2012/10/05/javascript-yield.html)
-- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)
+- [Out of date blog by James Long](http://jlongster.com/2012/10/05/javascript-yield.html)
+- [Mozilla developer basic docs on generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)
+- [taskjs an experimental library](http://taskjs.org/)
+- [Q.js spawn function](https://github.com/kriskowal/q/wiki/API-Reference#qspawngeneratorfunction)
+- [An insightful conversation on SO](http://stackoverflow.com/questions/23099855/koa-co-bluebird-or-q-generators-promises-thunks-interplay-node-js)
